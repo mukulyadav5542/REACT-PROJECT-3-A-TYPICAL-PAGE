@@ -51,50 +51,53 @@ const Login = (props) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const identifier = setTimeout(() => {
-  //     console.log('Checking form validity!');
-  //     setFormIsValid(
-  //       enteredEmail.includes("@") &&
-  //       enteredPassword.trim().length > 6 &&
-  //       enteredCollegeName.trim().length > 0
-  //     );
-  //   }, 500);
+  const { isValid: emailIsValid } = emailState;
+  const { isValid: passwordIsValid } = passwordState;
 
-  //   return () => {
-  //     console.log('CLEANUP');
-  //     clearTimeout(identifier);
-  //   }
-  // }, [enteredEmail, enteredPassword, enteredCollegeName]);
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      console.log('Checking form validity!');
+      setFormIsValid(
+        emailIsValid &&
+        passwordIsValid &&
+        enteredCollegeName.trim().length > 0
+      );
+    }, 500);
+
+    return () => {
+      console.log('CLEANUP');
+      clearTimeout(identifier);
+    }
+  }, [emailIsValid, passwordIsValid, enteredCollegeName]);
 
   const emailChangeHandler = (event) => {
     dispatchEmail({ type: "USER_INPUT", val: event.target.value });
 
-    setFormIsValid(
-      event.target.value.includes("@") &&
-      passwordState.isValid &&
-      enteredCollegeName.trim().length > 0
-    );
+    // setFormIsValid(
+    //   event.target.value.includes("@") &&
+    //   passwordState.isValid &&
+    //   enteredCollegeName.trim().length > 0
+    // );
   };
 
   const passwordChangeHandler = (event) => {
     dispatchPassword({ type: "USER_INPUT", val: event.target.value });
 
-    setFormIsValid(
-      emailState.isValid &&
-        event.target.value.trim().length > 6 &&
-        enteredCollegeName.trim().length > 0
-    );
+    // setFormIsValid(
+    //   emailState.isValid &&
+    //     event.target.value.trim().length > 6 &&
+    //     enteredCollegeName.trim().length > 0
+    // );
   };
 
   const collegeNameChangeHandler = (event) => {
     setEnteredCollegeName(event.target.value);
 
-    setFormIsValid(
-      emailState.isValid &&
-        passwordState.isValid &&
-        event.target.value.trim().length > 0
-    );
+    // setFormIsValid(
+    //   emailState.isValid &&
+    //     passwordState.isValid &&
+    //     event.target.value.trim().length > 0
+    // );
   };
 
   const validateEmailHandler = () => {
